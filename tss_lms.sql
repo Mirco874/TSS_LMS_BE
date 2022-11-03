@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 02-11-2022 a las 18:13:15
+-- Tiempo de generación: 03-11-2022 a las 18:29:19
 -- Versión del servidor: 10.4.21-MariaDB
 -- Versión de PHP: 8.0.10
 
@@ -64,7 +64,6 @@ CREATE TABLE `capitulo` (
   `estado_foro` tinyint(1) NOT NULL DEFAULT 1,
   `titulo_foro` varchar(100) DEFAULT NULL,
   `descripcion_foro` varchar(200) DEFAULT NULL,
-  `enlace_practica` varchar(255) DEFAULT NULL,
   `id_clase` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -72,9 +71,9 @@ CREATE TABLE `capitulo` (
 -- Volcado de datos para la tabla `capitulo`
 --
 
-INSERT INTO `capitulo` (`id`, `titulo_capitulo`, `titulo_material`, `descripcion_material`, `estado_foro`, `titulo_foro`, `descripcion_foro`, `enlace_practica`, `id_clase`) VALUES
-(1, 'Tema 1 ', 'introduccion a la simulacion d', 'se adjunta el material de introduccion a la  simulacion de sistemas', 0, 'foro del tema 1', 'foro de retroalimentacion del tema \"introduccion a la simulacion de sistemas\"', NULL, 1),
-(2, 'tema 2', 'Generacion de variables aleato', 'se adjunta el material de generacion de variables aleatorias', 1, 'foro del tema 2', 'foro de retroalimentacion del tema \"introduccion a la simulacion de sistemas\"', NULL, 1);
+INSERT INTO `capitulo` (`id`, `titulo_capitulo`, `titulo_material`, `descripcion_material`, `estado_foro`, `titulo_foro`, `descripcion_foro`, `id_clase`) VALUES
+(1, 'Tema 1 ', 'introduccion a la simulacion d', 'se adjunta el material de introduccion a la  simulacion de sistemas', 0, 'foro del tema 1', 'foro de retroalimentacion del tema \"introduccion a la simulacion de sistemas\"', 1),
+(2, 'tema 2', 'Generacion de variables aleato', 'se adjunta el material de generacion de variables aleatorias', 1, 'foro del tema 2', 'foro de retroalimentacion del tema \"introduccion a la simulacion de sistemas\"', 1);
 
 -- --------------------------------------------------------
 
@@ -114,6 +113,27 @@ CREATE TABLE `mensaje` (
 
 INSERT INTO `mensaje` (`id`, `contenido`, `id_capitulo`, `autor`) VALUES
 (1, 'ejemplo de mensaje', 1, 'juan perez perez');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `practica`
+--
+
+CREATE TABLE `practica` (
+  `id` int(11) NOT NULL,
+  `id_capitulo` int(11) NOT NULL,
+  `contenido` varchar(255) DEFAULT NULL,
+  `titulo_practica` varchar(150) DEFAULT NULL,
+  `enlace_practica` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Volcado de datos para la tabla `practica`
+--
+
+INSERT INTO `practica` (`id`, `id_capitulo`, `contenido`, `titulo_practica`, `enlace_practica`) VALUES
+(1, 1, 'public class prueba{ \n }', 'ejericio 1', '');
 
 -- --------------------------------------------------------
 
@@ -216,6 +236,13 @@ ALTER TABLE `mensaje`
   ADD KEY `id_foro` (`id_capitulo`);
 
 --
+-- Indices de la tabla `practica`
+--
+ALTER TABLE `practica`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `id_capitulo` (`id_capitulo`);
+
+--
 -- Indices de la tabla `rol`
 --
 ALTER TABLE `rol`
@@ -265,6 +292,12 @@ ALTER TABLE `mensaje`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
+-- AUTO_INCREMENT de la tabla `practica`
+--
+ALTER TABLE `practica`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
 -- AUTO_INCREMENT de la tabla `rol`
 --
 ALTER TABLE `rol`
@@ -303,6 +336,12 @@ ALTER TABLE `capitulo`
 --
 ALTER TABLE `mensaje`
   ADD CONSTRAINT `mensaje_ibfk_1` FOREIGN KEY (`id_capitulo`) REFERENCES `capitulo` (`id`);
+
+--
+-- Filtros para la tabla `practica`
+--
+ALTER TABLE `practica`
+  ADD CONSTRAINT `practica_ibfk_1` FOREIGN KEY (`id_capitulo`) REFERENCES `capitulo` (`id`);
 
 --
 -- Filtros para la tabla `usuario`

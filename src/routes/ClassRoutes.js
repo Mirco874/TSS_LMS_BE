@@ -3,7 +3,6 @@ import dbConnection from '../connection/db.js';
 
 const classRoutes= Router();
 
-//metodo para obtener los capitulos (o temario) de una clase
 classRoutes.get('/class/:id',async (req,res)=>{
     const idClase=req.params.id;
     const query=`SELECT clase.id as id_clase,
@@ -13,8 +12,7 @@ classRoutes.get('/class/:id',async (req,res)=>{
                     capitulo.descripcion_material as descripcion_material,
                     capitulo.estado_foro as estado_foro,
                     capitulo.titulo_foro as titulo_foro,
-                    capitulo.descripcion_foro as descripcion_foro,
-                    capitulo.enlace_practica as enlace_practica
+                    capitulo.descripcion_foro as descripcion_foro
                 FROM clase,capitulo 
                 WHERE clase.id=? and clase.id=capitulo.id_clase`;
 
@@ -31,20 +29,17 @@ classRoutes.get('/class/:id',async (req,res)=>{
             }
     });
 
-    console.log(chaptersList)
 
     const result={
                 id_clase:rows[0].id_clase,
                 nombre_clase:rows[0].nombre_clase,
                 capitulos:chaptersList
     }
-    console.log(result)
 
     res.send(result);
 })
 
 
-//metodo para obtener los usuarios estudiantes de una clase
 classRoutes.get('/class/:id/users', async(req,res)=>{
     const userId=req.params.id;
     const query=`SELECT usuario.id as id_usuario,
