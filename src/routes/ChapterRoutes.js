@@ -10,6 +10,7 @@ chapterRoutes.get('/chapters/:id/material',async (req,res)=>{
             capitulo.titulo_material,
             capitulo.descripcion_material,
             archivo.id as id_archivo,
+            archivo.nombre_archivo as nombre_archivo,
             archivo.tipo as tipo,
             archivo.enlace as enlace_material,
             archivo.contenido
@@ -19,6 +20,7 @@ chapterRoutes.get('/chapters/:id/material',async (req,res)=>{
     const material=rows.map((item)=>{
         return ({ 
             id_archivo:item.id_archivo,
+            nombre_archivo:item.nombre_archivo,
             tipo:item.tipo,
             enlace_material:item.enlace_material,
             contenido:item.contenido })
@@ -66,45 +68,32 @@ chapterRoutes.get('/chapters/:id/forum',async (req,res)=>{
 })
 
 chapterRoutes.get('/chapters/:id/practice',async (req,res)=>{
-    const[rows, fields]= await dbConnection.query(`
-    SELECT  capitulo.titulo_capitulo as titulo_capitulo,
-            capitulo.titulo_material as titulo_material,
-            capitulo.enlace_practica as enlace_practica
-    FROM capitulo
-    WHERE capitulo.id=? `, [req.params.id]);
-    res.send(rows);
+    const[rows, fields]= await dbConnection.query(`SELECT 	capitulo.id as id_capitulo ,
+                                                            capitulo.titulo_capitulo as titulo_capitulo,
+                                                            practica.id as id_practica,
+                                                            practica.titulo_practica as titulo_practica,
+                                                            practica.enlace_practica as enlace_practica,
+                                                            practica.contenido as contenido
+                                                    FROM capitulo,practica 
+                                                    WHERE capitulo.id=practica.id_capitulo
+                                                    AND capitulo.id=?`, [req.params.id]);
+    const practices= rows.map((item)=>{
+        return ({
+                id_capitulo:item.id_capitulo,
+                titulo_capitulo:item.titulo_capitulo,
+                enlace_practica:item.enlace_practica,
+                contenido:item.contenido
+                });
+    });
+
+    const result= {
+        id_capitulo: rows[0].id_capitulo,
+        titulo_material: rows[0].titulo_material,
+        practicas: practices
+    }
+
+    res.send(result);
 })
 
 
 export default chapterRoutes;
-
-
-
-
-
-
-
-
-// ChapterRoutes.get('/:id',(req,res)=>{
-
-//     if(querySize!==0 ){
-//         let query="SELECT * FROM capitulo WHERE id=? and ";
-//         let values=[req.params.id];
-
-//         const atributes=req.query;
-//         for (const property in atributes) {
-
-//             query+=property + "=? and " ;
-//             values.push(atributes[property])
-
-//             //el ultimo atriburo del query object
-//             //que pasa si se inventan un atributo del query
-//         }
-//         query=query.substring(0,query.length-4);
-//         console.log(query)
-//         console.log(values)
-//         const[rows, fields]=  dbConnection.query(query,[req.params.id]);
-//         res.send("asd");
-//     }
-
-// })
