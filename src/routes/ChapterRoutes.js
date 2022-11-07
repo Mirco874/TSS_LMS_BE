@@ -79,8 +79,8 @@ chapterRoutes.get('/chapters/:id/practice',async (req,res)=>{
                                                     AND capitulo.id=?`, [req.params.id]);
     const practices= rows.map((item)=>{
         return ({
-                id_capitulo:item.id_capitulo,
-                titulo_capitulo:item.titulo_capitulo,
+                id_practica:item.id_practica,
+                titulo_practica:item.titulo_practica,
                 enlace_practica:item.enlace_practica,
                 contenido:item.contenido
                 });
@@ -88,7 +88,7 @@ chapterRoutes.get('/chapters/:id/practice',async (req,res)=>{
 
     const result= {
         id_capitulo: rows[0].id_capitulo,
-        titulo_material: rows[0].titulo_material,
+        titulo_capitulo: rows[0].titulo_capitulo,
         practicas: practices
     }
 
