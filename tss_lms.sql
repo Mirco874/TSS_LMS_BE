@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 05-11-2022 a las 16:39:17
+-- Tiempo de generación: 13-11-2022 a las 02:34:15
 -- Versión del servidor: 10.4.21-MariaDB
 -- Versión de PHP: 8.0.10
 
@@ -57,11 +57,11 @@ INSERT INTO `archivo` (`id`, `enlace`, `id_capitulo`, `contenido`, `tipo`, `nomb
 
 CREATE TABLE `capitulo` (
   `id` int(11) NOT NULL,
-  `titulo_capitulo` varchar(100) NOT NULL,
-  `titulo_material` varchar(100) DEFAULT NULL,
-  `descripcion_material` varchar(150) DEFAULT NULL,
+  `titulo_capitulo` varchar(200) NOT NULL,
+  `titulo_material` varchar(200) DEFAULT NULL,
+  `descripcion_material` varchar(255) DEFAULT NULL,
   `estado_foro` tinyint(1) NOT NULL DEFAULT 1,
-  `titulo_foro` varchar(100) DEFAULT NULL,
+  `titulo_foro` varchar(150) DEFAULT NULL,
   `descripcion_foro` varchar(200) DEFAULT NULL,
   `id_clase` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -95,7 +95,21 @@ CREATE TABLE `clase` (
 
 INSERT INTO `clase` (`id`, `nombre_clase`) VALUES
 (1, 'simulacion de sistemas(1-2022)'),
-(2, 'simulación de sistemas (2-2021)');
+(2, 'simulación de sistemas (2-2021)'),
+(3, 'clase_prueba1 '),
+(4, 'nuanadasda'),
+(5, 'val1'),
+(6, 'clase_prueb3'),
+(7, 'clase_prueb3'),
+(8, 'clase_prueb3s'),
+(9, 'clase_prueb3s'),
+(10, 'dasdasdasd'),
+(11, 'ddddd'),
+(12, 'sdsdsdsds'),
+(13, 'asdasdasdasdasdas'),
+(14, 'asdasdasdasdasdas'),
+(15, 'nueva clase'),
+(16, 'prueba nueva clase');
 
 -- --------------------------------------------------------
 
@@ -126,19 +140,19 @@ INSERT INTO `mensaje` (`id`, `contenido`, `id_capitulo`, `autor`) VALUES
 CREATE TABLE `practica` (
   `id` int(11) NOT NULL,
   `id_capitulo` int(11) NOT NULL,
-  `contenido` varchar(255) DEFAULT NULL,
+  `contenido` text DEFAULT NULL,
   `titulo_practica` varchar(150) DEFAULT NULL,
-  `enlace_practica` varchar(255) DEFAULT NULL
+  `descripcion_practica` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Volcado de datos para la tabla `practica`
 --
 
-INSERT INTO `practica` (`id`, `id_capitulo`, `contenido`, `titulo_practica`, `enlace_practica`) VALUES
-(1, 2, 'class Ejercicio1{\\npublic static void main(String[] args){\\nSystem.out.println(3);}}', 'Ejercicio1', ''),
-(2, 5, 'class PracticaJuegoVolados{\\npublic static void main(String[] args){\\nSystem.out.println(3);}}', 'PracticaJuegoVolados', NULL),
-(3, 5, 'PracticaInversiones', 'class PracticaInversiones{\\npublic static void main(String[] args){\\nSystem.out.println(3);}}', NULL),
+INSERT INTO `practica` (`id`, `id_capitulo`, `contenido`, `titulo_practica`, `descripcion_practica`) VALUES
+(1, 2, '\nclass Ejercicio1{\n    public static void main(String[] args){\n        System.out.println(generarValor(5,7,8));\n    }\n    \n    public static double generarValor(int semilla,int cmultiplicativa,int modulo){\n        int i,numero;\n        double nume', 'Ejercicio1', ''),
+(2, 5, 'class Ejercicio2{\r\n        public static void main(String[] args){\r\n        System.out.println(generarValorSimulado(1,2,3));\r\n    }\r\n    \r\n    public static double generarValorSimulado(double pesimista,double probable,double optimista){\r\n        double a=', 'Ejercicio2', NULL),
+(3, 5, 'Ejercicio3', 'class PracticaInversiones{\\npublic static void main(String[] args){\\nSystem.out.println(3);}}', NULL),
 (4, 5, 'class PracticaColas{\\npublic static void main(String[] args){\\nSystem.out.println(3);}}', 'PracticaColas', NULL);
 
 -- --------------------------------------------------------
@@ -172,19 +186,19 @@ CREATE TABLE `usuario` (
   `nombre_completo` varchar(255) NOT NULL,
   `id_rol` int(11) NOT NULL,
   `email` varchar(150) NOT NULL,
-  `PASSWORD` varchar(30) NOT NULL
+  `password` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Volcado de datos para la tabla `usuario`
 --
 
-INSERT INTO `usuario` (`id`, `nombre_completo`, `id_rol`, `email`, `PASSWORD`) VALUES
+INSERT INTO `usuario` (`id`, `nombre_completo`, `id_rol`, `email`, `password`) VALUES
 (1, 'Felipe Perez Perez', 1, 'admin@gmail.com', 'contrasena'),
 (2, 'Ernesto Valle Valle', 3, 'docente1@gmail.com', 'contrasena'),
 (3, 'Juana Coca Coca', 2, 'estudiante1@gmai.com', 'contrasena'),
-(5, 'nuevo estudiante ', 2, 'nuevoest@gmail.com', 'nuevo est'),
-(6, 'David Jimenez', 2, 'davidEst@gmail.com', 'davidpass');
+(11, 'Nuevo Estudiante', 2, 'est2@gmail.com', '$2a$10$aL93lm9YIxBYvYuChXuiEOaWIyALZJEHEH.D8sFKo8WmAj6xeGlvC'),
+(12, 'Nuevo Docente', 3, 'doc33@gmail.com', '$2a$10$UTQM5NX59fQnnPadRUskjO1AcfBC8zNmw.pj2JGC0vAeBwfRylkmG');
 
 -- --------------------------------------------------------
 
@@ -206,8 +220,8 @@ INSERT INTO `usuario_clase` (`id`, `id_clase`, `id_usuario`) VALUES
 (1, 1, 1),
 (2, 1, 2),
 (3, 1, 3),
-(4, 1, 5),
-(5, 1, 6);
+(9, 16, 12),
+(10, 16, 11);
 
 --
 -- Índices para tablas volcadas
@@ -276,19 +290,19 @@ ALTER TABLE `usuario_clase`
 -- AUTO_INCREMENT de la tabla `archivo`
 --
 ALTER TABLE `archivo`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT de la tabla `capitulo`
 --
 ALTER TABLE `capitulo`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT de la tabla `clase`
 --
 ALTER TABLE `clase`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT de la tabla `mensaje`
@@ -300,7 +314,7 @@ ALTER TABLE `mensaje`
 -- AUTO_INCREMENT de la tabla `practica`
 --
 ALTER TABLE `practica`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT de la tabla `rol`
@@ -312,13 +326,13 @@ ALTER TABLE `rol`
 -- AUTO_INCREMENT de la tabla `usuario`
 --
 ALTER TABLE `usuario`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT de la tabla `usuario_clase`
 --
 ALTER TABLE `usuario_clase`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- Restricciones para tablas volcadas

@@ -1,5 +1,6 @@
 import { Router} from 'express'
 import dbConnection from '../connection/db.js';
+import { getUserData } from '../helpers/getClassesByUserId.js';
 
 const userRoutes= Router();
 
@@ -14,6 +15,8 @@ userRoutes.get('/users/', async(req,res)=>{
     res.send(rows);
 })
 
+
+
 userRoutes.get('/users/:id', async(req,res)=>{
     const query=`SELECT usuario.id as id,
                     nombre_completo,
@@ -27,16 +30,23 @@ userRoutes.get('/users/:id', async(req,res)=>{
     const[rows, fields]= await dbConnection.query(query,[userId]);
     res.send(rows);
 })
+//metodo para obetener las clases de un usuario segun su id
+userRoutes.get('/users/:id/class', async(req,res)=>{
+    try {
+        const {id}=req.params;
+        const userClasses= await getUserData(id);
+        res.send(userClasses);
+    } catch (error) {
+        console.log(error)
+        res.status(500).send("something is wrong")
+
+    }
 
 
-userRoutes.post('/users', async(req,res)=>{
-    const {nombre_completo,id_rol,email,password}=req.body
-    const query=`INSERT INTO usuario (nombre_completo,id_rol,email,password) 
-                             VALUES(?,?,?,?)`;
 
-    const[rows, fields]= await dbConnection.query(query,[nombre_completo,id_rol,email,password]);
-    res.send(rows);
+
 })
+
 
 
 

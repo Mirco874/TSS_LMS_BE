@@ -1,5 +1,6 @@
 import {Router} from 'express'
 import dbConnection from '../connection/db.js';
+import {registerUserInClass } from '../helpers/registerClass.js';
 
 const classRoutes= Router();
 
@@ -16,27 +17,32 @@ classRoutes.get('/class/:id',async (req,res)=>{
                 FROM clase,capitulo 
                 WHERE clase.id=? and clase.id=capitulo.id_clase`;
 
-    const[rows, fields]= await dbConnection.query(query,[idClase]);
-
-    const chaptersList=rows.map((row)=>{
-        return{ titulo_capitulo: row.titulo_capitulo,
-                titulo_material: row.titulo_material,
-                descripcion_material: row.descripcion_material,
-                estado_foro: row.estado_foro,
-                titulo_foro: row.titulo_foro,
-                descripcion_foro: row.descripcion_foro,
-                enlace_practica: row.enlace_practica
-            }
-    });
-
-
-    const result={
-                id_clase:rows[0].id_clase,
-                nombre_clase:rows[0].nombre_clase,
-                capitulos:chaptersList
+    const[rows]= await dbConnection.query(query,[idClase]);
+    if(rows.length===0){
+        res.send([]);
+    }
+    else{
+        const chaptersList=rows.map((row)=>{
+            return{ titulo_capitulo: row.titulo_capitulo,
+                    titulo_material: row.titulo_material,
+                    descripcion_material: row.descripcion_material,
+                    estado_foro: row.estado_foro,
+                    titulo_foro: row.titulo_foro,
+                    descripcion_foro: row.descripcion_foro,
+                    enlace_practica: row.enlace_practica
+                }
+        });
+    
+    
+        const result={
+                    id_clase:rows[0].id_clase,
+                    nombre_clase:rows[0].nombre_clase,
+                    capitulos:chaptersList
+        }
+    
+        res.send(result);
     }
 
-    res.send(result);
 })
 
 
@@ -56,12 +62,32 @@ classRoutes.get('/class/:id/users', async(req,res)=>{
     res.send(rows);
 })
 
-//metodo para guardar un estudiante en una clase
-classRoutes.post('/class',async (req,res)=>{
-    const nombreClase=req.body.nombre_clase;
-    const query=`INSERT INTO clase(nombre_clase) VALUES (?)`;
-    const[rows, fields]= await dbConnection.query(query,[nombreClase]);
-    res.send(rows);
+//metodo para crear una nueva clase y agregar al docente dentro
+classRoutes.post('/class/create',async (req,res)=>{
+    const {nombre_clase,id_usuario}=req.body;
+    const newClassId=await registerUserInClass(nombre_clase,id_usuario);
+    res.status(200).send(`New class was created successfully with id: ${newClassId}`)
+})
+
+//metodo para registrar a un estudiante en una clase
+classRoutes.post('/class/register',async (req,res)=>{
+    try {
+        const {id_clase,id_usuario}=req.body;
+        const query="select * from clase WHERE clase.id=?"
+        const[rows]= await dbConnection.query(query,[id_clase]);
+        if (rows.length===1){
+            const registerUserInClassQuery=`INSERT INTO usuario_clase (id_clase,id_usuario) values (?,?) `
+            await dbConnection.query(registerUserInClassQuery,[id_clase,id_usuario]);
+            res.send("the user was registered successfully")
+        }
+        else{
+            res.status(400).send("there isn´t exist a class with th id: "+id_clase)
+        }
+    } catch (error) {
+        res.status(500).send("something is wrong")
+    }
+
+
 })
 
 
