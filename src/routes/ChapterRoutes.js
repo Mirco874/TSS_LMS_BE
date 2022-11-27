@@ -80,7 +80,7 @@ chapterRoutes.get("/chapters/:id/practice", async (req, res) => {
                                                             capitulo.titulo_capitulo as titulo_capitulo,
                                                             practica.id as id_practica,
                                                             practica.titulo_practica as titulo_practica,
-                                                            practica.enlace_practica as enlace_practica,
+                                                            
                                                             practica.contenido as contenido
                                                     FROM capitulo,practica 
                                                     WHERE capitulo.id=practica.id_capitulo

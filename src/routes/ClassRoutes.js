@@ -9,6 +9,7 @@ classRoutes.get('/class/:id',async (req,res)=>{
     const query=`SELECT clase.id as id_clase,
                     clase.nombre_clase as nombre_clase,
                     capitulo.titulo_capitulo as titulo_capitulo,
+                    capitulo.id as id_capitulo, 
                     capitulo.titulo_material as titulo_material,
                     capitulo.descripcion_material as descripcion_material,
                     capitulo.estado_foro as estado_foro,
