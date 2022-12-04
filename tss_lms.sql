@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 13-11-2022 a las 02:34:15
+-- Tiempo de generación: 04-12-2022 a las 20:09:13
 -- Versión del servidor: 10.4.21-MariaDB
 -- Versión de PHP: 8.0.10
 
@@ -114,6 +114,32 @@ INSERT INTO `clase` (`id`, `nombre_clase`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `contribucion`
+--
+
+CREATE TABLE `contribucion` (
+  `id` int(11) NOT NULL,
+  `id_usuario` int(11) DEFAULT NULL,
+  `titulo` varchar(100) DEFAULT NULL,
+  `descripcion` varchar(255) DEFAULT NULL,
+  `className` varchar(100) DEFAULT NULL,
+  `codigo` text DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Volcado de datos para la tabla `contribucion`
+--
+
+INSERT INTO `contribucion` (`id`, `id_usuario`, `titulo`, `descripcion`, `className`, `codigo`) VALUES
+(1, 11, 'Ayuda no compila', 'Intente imprimir un numero en consola pero no se pudo', 'Imprimir', 'class Imprimir{\r\npublic static void main(String[] args) {\r\nSystem.out.println(555);}\r\n}'),
+(2, 3, 'Solucion tarea de la mañana', 'les dejo la solucion al problema que no se pudo resolver en clases', 'Solucion', 'class Solucion{\r\npublic static void main(String[] args) {\r\nSystem.out.println(7777);}\r\n}'),
+(3, 11, 'ejemplo', 'descripcion ejemplo', 'Ejemplo', 'public class Ejemplo{ \r\npublic static void main(String[] args) { \r\nSystem.out.println(222222);}\r\n}'),
+(4, 11, 'ejemplo2', 'descripcion ejemplo2', 'Ejemplo2', 'public class Ejemplo2{ \r\npublic static void main(String[] args) { \r\nSystem.out.println(8);}\r\n}'),
+(6, 11, 'titulo editado', 'descripcion editada', 'clase editada', 'codigo editado');
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `mensaje`
 --
 
@@ -134,6 +160,19 @@ INSERT INTO `mensaje` (`id`, `contenido`, `id_capitulo`, `autor`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `mensaje_contribucion`
+--
+
+CREATE TABLE `mensaje_contribucion` (
+  `id` int(11) NOT NULL,
+  `id_autor` int(11) DEFAULT NULL,
+  `id_contribucion` int(11) DEFAULT NULL,
+  `contenido` text DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `practica`
 --
 
@@ -150,9 +189,9 @@ CREATE TABLE `practica` (
 --
 
 INSERT INTO `practica` (`id`, `id_capitulo`, `contenido`, `titulo_practica`, `descripcion_practica`) VALUES
-(1, 2, '\nclass Ejercicio1{\n    public static void main(String[] args){\n        System.out.println(generarValor(5,7,8));\n    }\n    \n    public static double generarValor(int semilla,int cmultiplicativa,int modulo){\n        int i,numero;\n        double nume', 'Ejercicio1', ''),
-(2, 5, 'class Ejercicio2{\r\n        public static void main(String[] args){\r\n        System.out.println(generarValorSimulado(1,2,3));\r\n    }\r\n    \r\n    public static double generarValorSimulado(double pesimista,double probable,double optimista){\r\n        double a=', 'Ejercicio2', NULL),
-(3, 5, 'Ejercicio3', 'class PracticaInversiones{\\npublic static void main(String[] args){\\nSystem.out.println(3);}}', NULL),
+(1, 2, 'class Ejercicio1{\n    public static void main(String[] args){\n        System.out.println(generarValor(5,7,8));\n    }\n    \n    public static double generarValor(int semilla,int cmultiplicativa,int modulo){\n        int i,numero;\n        double numero2=0;\n        for(i=0;i<=20;i++){\n            numero=(cmultiplicativa*semilla)%modulo;\n            numero2=(double) numero/(double)(modulo-1);\n            semilla=numero;}\n        return numero2;\n        }\n        \n    public static double generarValorAleatorio(){\n        double numero=(double) (Math.random());\n        return numero;\n    }\n}', 'Ejercicio1', 'El siguiente ejercicio consiste en comparar dos generadores aleatorios, el primero fue implementado en java siguiendo el avance del capitulo 1 y el segundo es el generador aleatorio implementado en java.\nExperimente con la generacion de numeros aleatorios'),
+(2, 5, 'class Ejercicio2{\n        public static void main(String[] args){\n        System.out.println(generarValorSimulado(1,2,3));\n    }\n    \n    public static double generarValorSimulado(double pesimista,double probable,double optimista){\n        double a=pesimista;\n        double b=probable;\n        double c=optimista;\n        double x=0;\n        congruencialMixto generador =new congruencialMixto();\n        double R=generador.generarValorAleatorio();\n        if( R<=((b-a)/(c-a)) ){\n            x=c-Math.sqrt((c-a)*(b-a)*R);\n        }\n        else{\n            x=c-Math.sqrt((c-a)*(c-b)*(1-R));\n        }\n        return x;\n    }\n}\n\nclass congruencialMixto{\n    public static double generarValor(int semilla,int cmultiplicativa,int modulo){\n        int i,numero;\n        double numero2=0;\n        for(i=0;i<=20;i++){\n            numero=(cmultiplicativa*semilla)%modulo;\n            numero2=(double) numero/(double)(modulo-1);\n            semilla=numero;}\n        return numero2;\n        }\n        \n    public static double generarValorAleatorio(){\n        double numero=(double) (Math.random());\n        return numero;\n    }\n}', 'Ejercicio2', '\nSiguiendo el ejemplo de la simulacion de valores que siguen el comportamiento de una distribucion triangular del ejercicio \"simulación de factibilidad del negocio\", se muestra la implementacion de la ecuacion deducida en el metodo \"generarValorSimulado\"'),
+(3, 5, 'public class Ejercicio3{ \n public static void main(String[] args){\n System.out.println(calcularVR(100000,5000,0.15 ));\n }\n \n public static double calcularVR(double AC, double AF, double T){\n double a=0.2*AF;\n double b=1-T;\n double c=a*b;\n return AC+c;\n }\n}', 'Ejercicio33', 'El siguiente código es la implementacion de la simulacion del valor del residuo, visto en el capítulo 5.\nel metodo implementado es \"calcularVR()\" con un activo fijo de 5000, un activo circulante de 100000 y una tasa de inflacion constante del 15% anual'),
 (4, 5, 'class PracticaColas{\\npublic static void main(String[] args){\\nSystem.out.println(3);}}', 'PracticaColas', NULL);
 
 -- --------------------------------------------------------
@@ -194,9 +233,9 @@ CREATE TABLE `usuario` (
 --
 
 INSERT INTO `usuario` (`id`, `nombre_completo`, `id_rol`, `email`, `password`) VALUES
-(1, 'Felipe Perez Perez', 1, 'admin@gmail.com', 'contrasena'),
-(2, 'Ernesto Valle Valle', 3, 'docente1@gmail.com', 'contrasena'),
-(3, 'Juana Coca Coca', 2, 'estudiante1@gmai.com', 'contrasena'),
+(1, 'Felipe Perez Perez', 1, 'admin@gmail.com', '$2a$10$aL93lm9YIxBYvYuChXuiEOaWIyALZJEHEH.D8sFKo8WmAj6xeGlvC'),
+(2, 'Ernesto Valle Valle', 3, 'docente1@gmail.com', '$2a$10$aL93lm9YIxBYvYuChXuiEOaWIyALZJEHEH.D8sFKo8WmAj6xeGlvC'),
+(3, 'Juana Coca Coca', 2, 'estudiante1@gmail.com', '$2a$10$aL93lm9YIxBYvYuChXuiEOaWIyALZJEHEH.D8sFKo8WmAj6xeGlvC'),
 (11, 'Nuevo Estudiante', 2, 'est2@gmail.com', '$2a$10$aL93lm9YIxBYvYuChXuiEOaWIyALZJEHEH.D8sFKo8WmAj6xeGlvC'),
 (12, 'Nuevo Docente', 3, 'doc33@gmail.com', '$2a$10$UTQM5NX59fQnnPadRUskjO1AcfBC8zNmw.pj2JGC0vAeBwfRylkmG');
 
@@ -248,11 +287,26 @@ ALTER TABLE `clase`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indices de la tabla `contribucion`
+--
+ALTER TABLE `contribucion`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `id_usuario` (`id_usuario`);
+
+--
 -- Indices de la tabla `mensaje`
 --
 ALTER TABLE `mensaje`
   ADD PRIMARY KEY (`id`),
   ADD KEY `id_foro` (`id_capitulo`);
+
+--
+-- Indices de la tabla `mensaje_contribucion`
+--
+ALTER TABLE `mensaje_contribucion`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `id_autor` (`id_autor`),
+  ADD KEY `id_contribucion` (`id_contribucion`);
 
 --
 -- Indices de la tabla `practica`
@@ -305,10 +359,22 @@ ALTER TABLE `clase`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
+-- AUTO_INCREMENT de la tabla `contribucion`
+--
+ALTER TABLE `contribucion`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
+--
 -- AUTO_INCREMENT de la tabla `mensaje`
 --
 ALTER TABLE `mensaje`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT de la tabla `mensaje_contribucion`
+--
+ALTER TABLE `mensaje_contribucion`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `practica`
@@ -351,10 +417,23 @@ ALTER TABLE `capitulo`
   ADD CONSTRAINT `FK_Capitulo_Clase` FOREIGN KEY (`id_clase`) REFERENCES `clase` (`id`);
 
 --
+-- Filtros para la tabla `contribucion`
+--
+ALTER TABLE `contribucion`
+  ADD CONSTRAINT `contribucion_ibfk_1` FOREIGN KEY (`id_usuario`) REFERENCES `usuario` (`id`);
+
+--
 -- Filtros para la tabla `mensaje`
 --
 ALTER TABLE `mensaje`
   ADD CONSTRAINT `mensaje_ibfk_1` FOREIGN KEY (`id_capitulo`) REFERENCES `capitulo` (`id`);
+
+--
+-- Filtros para la tabla `mensaje_contribucion`
+--
+ALTER TABLE `mensaje_contribucion`
+  ADD CONSTRAINT `mensaje_contribucion_ibfk_1` FOREIGN KEY (`id_autor`) REFERENCES `usuario` (`id`),
+  ADD CONSTRAINT `mensaje_contribucion_ibfk_2` FOREIGN KEY (`id_contribucion`) REFERENCES `contribucion` (`id`);
 
 --
 -- Filtros para la tabla `practica`
