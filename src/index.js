@@ -7,6 +7,7 @@ import userRoutes from './routes/UserRoutes.js';
 import cors from 'cors'
 import practiceRoutes from './routes/PracticeRoutes.js';
 import authRoutes from './routes/auth.js';
+import contriRoutes from './routes/ContriRoutes.js';
 
 const app = express()
 const APIRoute='/api';
@@ -22,6 +23,7 @@ app.use(APIRoute,registerRoutes);
 app.use(APIRoute,CompilerRoutes);
 app.use(APIRoute,practiceRoutes);
 app.use(APIRoute,authRoutes);
+app.use(APIRoute,contriRoutes);
 
 console.log("Server is running on port: "+app.get("port"));
 app.listen(app.get("port"))

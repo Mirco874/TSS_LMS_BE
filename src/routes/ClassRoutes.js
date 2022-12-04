@@ -24,7 +24,9 @@ classRoutes.get('/class/:id',async (req,res)=>{
     }
     else{
         const chaptersList=rows.map((row)=>{
-            return{ titulo_capitulo: row.titulo_capitulo,
+            return{ 
+                    id_capitulo:row.id_capitulo,
+                    titulo_capitulo: row.titulo_capitulo,
                     titulo_material: row.titulo_material,
                     descripcion_material: row.descripcion_material,
                     estado_foro: row.estado_foro,
