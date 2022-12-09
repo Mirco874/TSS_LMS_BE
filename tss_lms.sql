@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 04-12-2022 a las 20:09:13
+-- Tiempo de generación: 09-12-2022 a las 23:39:35
 -- Versión del servidor: 10.4.21-MariaDB
 -- Versión de PHP: 8.0.10
 
@@ -47,7 +47,9 @@ INSERT INTO `archivo` (`id`, `enlace`, `id_capitulo`, `contenido`, `tipo`, `nomb
 (4, 'inserte enlace del pdf para el tema 4', 4, NULL, 1, 'Generación de variables aleatorias no uniformes.pdf'),
 (5, 'inserte enlace del pdf para el tema 5', 5, NULL, 1, 'Aplicaciones de simulacion.pdf'),
 (6, 'inserte enlace del pdf para el tema 6', 6, NULL, 1, 'Análisis de los resultados de simulación.pdf'),
-(9, 'insertar pdf de ejemplos de aplicaciones de simulación', 1, '', 1, 'Ejemplos de aplicaciones de simulacion.pdf');
+(9, 'insertar pdf de ejemplos de aplicaciones de simulación', 1, '', 1, 'Ejemplos de aplicaciones de simulacion.pdf'),
+(12, 'borrarrsdsa', 11, 'dsadsadasdasdsa', NULL, 'borrarrasdasdasdas'),
+(13, 'enlace material editado', 12, NULL, NULL, 'titulo material editado');
 
 -- --------------------------------------------------------
 
@@ -76,7 +78,9 @@ INSERT INTO `capitulo` (`id`, `titulo_capitulo`, `titulo_material`, `descripcion
 (3, 'Tema 3. Pruebas estadísticas para números pseudoaleatorios', 'Pruebas estadísticas para números pseudoaleatorios', 'Se adjunta el material del capítulo pruebas estadísticas para números pseudoaleatorios', 0, 'Foro del tema 3', 'Espacio para retroalimentar los conceptos de pruebas de aleatoriedad en los generadores de números rectangulares', 1),
 (4, 'Tema 4. Generación de variables aleatorias no-uniformes.', 'Generación de variables aleatorias no-uniformes.', 'Se adjunta el material del capítulo generación de variables aleatorias no-uniformes.', 0, 'Foro del tema 4', 'Espacio para retroalimentar los conceptos de :', 1),
 (5, 'Tema 5. Aplicaciones de simulación.', 'Aplicaciones de simulación', 'Se adjunta el material del tema aplicaciones de simulación.', 0, 'Foro del tema 5', 'Espacio de retroalimentación de los conceptos estudiados y analizados en el tema 5.', 1),
-(6, 'Tema 6. Análisis de los resultados de simulación.', 'Análisis de los resultados de simulación.', 'Se adjunta el material del tema análisis de los resultados de simulación.', 0, 'Foro del tema 6', 'Espacio de retroalimentación de los conceptos estudiados y analizados en el tema 6.', 1);
+(6, 'Tema 6. Análisis de los resultados de simulación.', 'Análisis de los resultados de simulación.', 'Se adjunta el material del tema análisis de los resultados de simulación.', 0, 'Foro del tema 6', 'Espacio de retroalimentación de los conceptos estudiados y analizados en el tema 6.', 1),
+(11, 'borrarrgdfg', 'borrarrdfgfd', 'borrarrgdfgdfg', 1, 'borrarrgdfgdf', 'borrarrgdfgdfgdfgdfgdfgdfgdf', 15),
+(12, 'esta editado', 'titulo material editado', 'desc material editado', 1, 'titulo foro editado', 'desc foro editado', 15);
 
 -- --------------------------------------------------------
 
@@ -155,7 +159,8 @@ CREATE TABLE `mensaje` (
 --
 
 INSERT INTO `mensaje` (`id`, `contenido`, `id_capitulo`, `autor`) VALUES
-(1, 'ejemplo de mensaje', 1, 'juan perez perez');
+(1, 'ejemplo de mensajes', 1, 'juan perez perezs'),
+(3, 'editadoooo', 12, 'pedro');
 
 -- --------------------------------------------------------
 
@@ -169,6 +174,15 @@ CREATE TABLE `mensaje_contribucion` (
   `id_contribucion` int(11) DEFAULT NULL,
   `contenido` text DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Volcado de datos para la tabla `mensaje_contribucion`
+--
+
+INSERT INTO `mensaje_contribucion` (`id`, `id_autor`, `id_contribucion`, `contenido`) VALUES
+(1, 2, 1, 'holaaaaaaas'),
+(2, 1, 1, 'no copilaaaaaaaaaaa'),
+(3, 2, 3, 'no ver');
 
 -- --------------------------------------------------------
 
@@ -192,7 +206,9 @@ INSERT INTO `practica` (`id`, `id_capitulo`, `contenido`, `titulo_practica`, `de
 (1, 2, 'class Ejercicio1{\n    public static void main(String[] args){\n        System.out.println(generarValor(5,7,8));\n    }\n    \n    public static double generarValor(int semilla,int cmultiplicativa,int modulo){\n        int i,numero;\n        double numero2=0;\n        for(i=0;i<=20;i++){\n            numero=(cmultiplicativa*semilla)%modulo;\n            numero2=(double) numero/(double)(modulo-1);\n            semilla=numero;}\n        return numero2;\n        }\n        \n    public static double generarValorAleatorio(){\n        double numero=(double) (Math.random());\n        return numero;\n    }\n}', 'Ejercicio1', 'El siguiente ejercicio consiste en comparar dos generadores aleatorios, el primero fue implementado en java siguiendo el avance del capitulo 1 y el segundo es el generador aleatorio implementado en java.\nExperimente con la generacion de numeros aleatorios'),
 (2, 5, 'class Ejercicio2{\n        public static void main(String[] args){\n        System.out.println(generarValorSimulado(1,2,3));\n    }\n    \n    public static double generarValorSimulado(double pesimista,double probable,double optimista){\n        double a=pesimista;\n        double b=probable;\n        double c=optimista;\n        double x=0;\n        congruencialMixto generador =new congruencialMixto();\n        double R=generador.generarValorAleatorio();\n        if( R<=((b-a)/(c-a)) ){\n            x=c-Math.sqrt((c-a)*(b-a)*R);\n        }\n        else{\n            x=c-Math.sqrt((c-a)*(c-b)*(1-R));\n        }\n        return x;\n    }\n}\n\nclass congruencialMixto{\n    public static double generarValor(int semilla,int cmultiplicativa,int modulo){\n        int i,numero;\n        double numero2=0;\n        for(i=0;i<=20;i++){\n            numero=(cmultiplicativa*semilla)%modulo;\n            numero2=(double) numero/(double)(modulo-1);\n            semilla=numero;}\n        return numero2;\n        }\n        \n    public static double generarValorAleatorio(){\n        double numero=(double) (Math.random());\n        return numero;\n    }\n}', 'Ejercicio2', '\nSiguiendo el ejemplo de la simulacion de valores que siguen el comportamiento de una distribucion triangular del ejercicio \"simulación de factibilidad del negocio\", se muestra la implementacion de la ecuacion deducida en el metodo \"generarValorSimulado\"'),
 (3, 5, 'public class Ejercicio3{ \n public static void main(String[] args){\n System.out.println(calcularVR(100000,5000,0.15 ));\n }\n \n public static double calcularVR(double AC, double AF, double T){\n double a=0.2*AF;\n double b=1-T;\n double c=a*b;\n return AC+c;\n }\n}', 'Ejercicio33', 'El siguiente código es la implementacion de la simulacion del valor del residuo, visto en el capítulo 5.\nel metodo implementado es \"calcularVR()\" con un activo fijo de 5000, un activo circulante de 100000 y una tasa de inflacion constante del 15% anual'),
-(4, 5, 'class PracticaColas{\\npublic static void main(String[] args){\\nSystem.out.println(3);}}', 'PracticaColas', NULL);
+(4, 5, 'class PracticaColas{\\npublic static void main(String[] args){\\nSystem.out.println(3);}}', 'PracticaColas', NULL),
+(7, 11, 'borrarraa', 'borrarraa', 'borrarraaaa'),
+(8, 12, 'codigo ejemplo editado', ' titulo ejemplo editado', 'descripcion ejemplo editado');
 
 -- --------------------------------------------------------
 
@@ -344,13 +360,13 @@ ALTER TABLE `usuario_clase`
 -- AUTO_INCREMENT de la tabla `archivo`
 --
 ALTER TABLE `archivo`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT de la tabla `capitulo`
 --
 ALTER TABLE `capitulo`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT de la tabla `clase`
@@ -368,19 +384,19 @@ ALTER TABLE `contribucion`
 -- AUTO_INCREMENT de la tabla `mensaje`
 --
 ALTER TABLE `mensaje`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT de la tabla `mensaje_contribucion`
 --
 ALTER TABLE `mensaje_contribucion`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
 -- AUTO_INCREMENT de la tabla `practica`
 --
 ALTER TABLE `practica`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT de la tabla `rol`
