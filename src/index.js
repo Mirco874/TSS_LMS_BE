@@ -10,6 +10,8 @@ import authRoutes from './routes/auth.js';
 import contriRoutes from './routes/ContriRoutes.js';
 import forumRoutes from './routes/forumRoutes.js';
 import contributionMessageRoutes from './routes/ContributionMessageRoutes.js';
+import messageRoutes from './routes/messagesRoutes.js';
+import taskRoutes from './routes/taskRoutes.js';
 const app = express()
 const APIRoute='/api';
 
@@ -27,7 +29,8 @@ app.use(APIRoute,authRoutes);
 app.use(APIRoute,contributionMessageRoutes)
 app.use(APIRoute,contriRoutes);
 app.use(APIRoute,forumRoutes);
-
+app.use(APIRoute,messageRoutes);
+app.use(APIRoute,taskRoutes);
 
 console.log("Server is running on port: "+app.get("port"));
 app.listen(app.get("port"))
