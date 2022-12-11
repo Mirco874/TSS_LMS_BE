@@ -5,14 +5,19 @@ const messageRoutes= Router();
 
 //obtener los mensajes que intercambie con un usuario
 messageRoutes.get("/myMessages",async(req,res)=>{
-    const {idUsuarioOrigen,idUsuarioDestino}=req.body;
+    const {id_emisor,id_receptor}=req.query;
+    const getMyMessagesQuery=`SELECT  mensaje_usuario.id,
+                                        mensaje_usuario.contenido, 
+                                        mensaje_usuario.id_emisor,	
+                                        mensaje_usuario.id_receptor,		
+                                        usuario.nombre_completo,
+                                        usuario.email	
+                            FROM mensaje_usuario,usuario
+                            WHERE id_emisor=?
+                            AND id_receptor=? 
+                            AND id_emisor=usuario.id`;
 
-    const getMyMessagesQuery=`SELECT * 
-                              FROM mensaje_usuario 
-                              WHERE id_emisor=?
-                              AND id_receptor=?
-                              `
-    const [rows] =await dbConnection.query(getMyMessagesQuery,[idUsuarioOrigen,idUsuarioDestino])
+    const [rows] =await dbConnection.query(getMyMessagesQuery,[id_emisor,id_receptor])
     res.send(rows)
 })
 

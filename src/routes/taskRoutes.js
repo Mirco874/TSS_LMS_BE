@@ -52,10 +52,13 @@ taskRoutes.put("/chapter/:id_capitulo/tasks/:id_tarea",async(req,res)=>{
 
 taskRoutes.get("/task/:id_tarea/responses",async(req,res)=>{
     const {id_tarea}=req.params;
-    const getResponsesQuery=`SELECT * 
-                        FROM tarea,respuesta_tarea 
-                        WHERE tarea.id=respuesta_tarea.id_tarea
-                        AND tarea.id= ?`;
+    const getResponsesQuery=`SELECT tarea.*,
+                                    respuesta_tarea.*,
+                                    usuario.nombre_completo
+                            FROM tarea,respuesta_tarea,usuario
+                            WHERE tarea.id=respuesta_tarea.id_tarea 
+                            AND respuesta_tarea.id_usuario=usuario.id
+                            AND tarea.id= ?`;
 
    const [rows]=await dbConnection.query(getResponsesQuery,[id_tarea]);
 
