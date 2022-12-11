@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 09-12-2022 a las 23:39:35
+-- Tiempo de generación: 11-12-2022 a las 14:51:53
 -- Versión del servidor: 10.4.21-MariaDB
 -- Versión de PHP: 8.0.10
 
@@ -49,7 +49,8 @@ INSERT INTO `archivo` (`id`, `enlace`, `id_capitulo`, `contenido`, `tipo`, `nomb
 (6, 'inserte enlace del pdf para el tema 6', 6, NULL, 1, 'Análisis de los resultados de simulación.pdf'),
 (9, 'insertar pdf de ejemplos de aplicaciones de simulación', 1, '', 1, 'Ejemplos de aplicaciones de simulacion.pdf'),
 (12, 'borrarrsdsa', 11, 'dsadsadasdasdsa', NULL, 'borrarrasdasdasdas'),
-(13, 'enlace material editado', 12, NULL, NULL, 'titulo material editado');
+(13, 'enlace material editado', 12, NULL, NULL, 'titulo material editado'),
+(14, 'enlace del material', 13, NULL, NULL, 'borrarr');
 
 -- --------------------------------------------------------
 
@@ -80,7 +81,8 @@ INSERT INTO `capitulo` (`id`, `titulo_capitulo`, `titulo_material`, `descripcion
 (5, 'Tema 5. Aplicaciones de simulación.', 'Aplicaciones de simulación', 'Se adjunta el material del tema aplicaciones de simulación.', 0, 'Foro del tema 5', 'Espacio de retroalimentación de los conceptos estudiados y analizados en el tema 5.', 1),
 (6, 'Tema 6. Análisis de los resultados de simulación.', 'Análisis de los resultados de simulación.', 'Se adjunta el material del tema análisis de los resultados de simulación.', 0, 'Foro del tema 6', 'Espacio de retroalimentación de los conceptos estudiados y analizados en el tema 6.', 1),
 (11, 'borrarrgdfg', 'borrarrdfgfd', 'borrarrgdfgdfg', 1, 'borrarrgdfgdf', 'borrarrgdfgdfgdfgdfgdfgdfgdf', 15),
-(12, 'esta editado', 'titulo material editado', 'desc material editado', 1, 'titulo foro editado', 'desc foro editado', 15);
+(12, 'esta editado', 'titulo material editado', 'desc material editado', 1, 'titulo foro editado', 'desc foro editado', 15),
+(13, 'borrarr', 'borrarr', 'borrarr', 1, 'borrarr', 'borrarr', 15);
 
 -- --------------------------------------------------------
 
@@ -187,6 +189,27 @@ INSERT INTO `mensaje_contribucion` (`id`, `id_autor`, `id_contribucion`, `conten
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `mensaje_usuario`
+--
+
+CREATE TABLE `mensaje_usuario` (
+  `id` int(11) NOT NULL,
+  `contenido` varchar(255) NOT NULL,
+  `id_emisor` int(11) NOT NULL,
+  `id_receptor` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Volcado de datos para la tabla `mensaje_usuario`
+--
+
+INSERT INTO `mensaje_usuario` (`id`, `contenido`, `id_emisor`, `id_receptor`) VALUES
+(1, 'hola te envio un mensaje', 2, 1),
+(2, 'mensaje al usaurio nose', 1, 2);
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `practica`
 --
 
@@ -208,7 +231,28 @@ INSERT INTO `practica` (`id`, `id_capitulo`, `contenido`, `titulo_practica`, `de
 (3, 5, 'public class Ejercicio3{ \n public static void main(String[] args){\n System.out.println(calcularVR(100000,5000,0.15 ));\n }\n \n public static double calcularVR(double AC, double AF, double T){\n double a=0.2*AF;\n double b=1-T;\n double c=a*b;\n return AC+c;\n }\n}', 'Ejercicio33', 'El siguiente código es la implementacion de la simulacion del valor del residuo, visto en el capítulo 5.\nel metodo implementado es \"calcularVR()\" con un activo fijo de 5000, un activo circulante de 100000 y una tasa de inflacion constante del 15% anual'),
 (4, 5, 'class PracticaColas{\\npublic static void main(String[] args){\\nSystem.out.println(3);}}', 'PracticaColas', NULL),
 (7, 11, 'borrarraa', 'borrarraa', 'borrarraaaa'),
-(8, 12, 'codigo ejemplo editado', ' titulo ejemplo editado', 'descripcion ejemplo editado');
+(8, 12, 'codigo ejemplo editado', ' titulo ejemplo editado', 'descripcion ejemplo editado'),
+(9, 13, 'borrarr', 'borrarr', 'borrarr');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `respuesta_tarea`
+--
+
+CREATE TABLE `respuesta_tarea` (
+  `id_usuario` int(11) NOT NULL,
+  `id_tarea` int(11) NOT NULL,
+  `mensaje` varchar(255) NOT NULL,
+  `codigo` text DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Volcado de datos para la tabla `respuesta_tarea`
+--
+
+INSERT INTO `respuesta_tarea` (`id_usuario`, `id_tarea`, `mensaje`, `codigo`) VALUES
+(2, 1, 'holkaaaa', 'dawvcxetrer');
 
 -- --------------------------------------------------------
 
@@ -229,6 +273,29 @@ INSERT INTO `rol` (`id`, `nombre_rol`) VALUES
 (1, 'administrador'),
 (2, 'estudiante'),
 (3, 'docente');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `tarea`
+--
+
+CREATE TABLE `tarea` (
+  `id` int(11) NOT NULL,
+  `id_capitulo` int(11) NOT NULL,
+  `descripcion` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Volcado de datos para la tabla `tarea`
+--
+
+INSERT INTO `tarea` (`id`, `id_capitulo`, `descripcion`) VALUES
+(1, 13, 'dsadasdasdasdasdasdas'),
+(2, 13, 'dasdasdasdasdasdas'),
+(3, 1, 'la tarea es ....'),
+(4, 1, 'la segunda tarea es ..'),
+(5, 1, 'editado');
 
 -- --------------------------------------------------------
 
@@ -325,6 +392,14 @@ ALTER TABLE `mensaje_contribucion`
   ADD KEY `id_contribucion` (`id_contribucion`);
 
 --
+-- Indices de la tabla `mensaje_usuario`
+--
+ALTER TABLE `mensaje_usuario`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `id_emisor` (`id_emisor`),
+  ADD KEY `id_receptor` (`id_receptor`);
+
+--
 -- Indices de la tabla `practica`
 --
 ALTER TABLE `practica`
@@ -332,10 +407,23 @@ ALTER TABLE `practica`
   ADD KEY `id_capitulo` (`id_capitulo`);
 
 --
+-- Indices de la tabla `respuesta_tarea`
+--
+ALTER TABLE `respuesta_tarea`
+  ADD PRIMARY KEY (`id_usuario`,`id_tarea`);
+
+--
 -- Indices de la tabla `rol`
 --
 ALTER TABLE `rol`
   ADD PRIMARY KEY (`id`);
+
+--
+-- Indices de la tabla `tarea`
+--
+ALTER TABLE `tarea`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `id_clase` (`id_capitulo`);
 
 --
 -- Indices de la tabla `usuario`
@@ -360,13 +448,13 @@ ALTER TABLE `usuario_clase`
 -- AUTO_INCREMENT de la tabla `archivo`
 --
 ALTER TABLE `archivo`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT de la tabla `capitulo`
 --
 ALTER TABLE `capitulo`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT de la tabla `clase`
@@ -393,16 +481,28 @@ ALTER TABLE `mensaje_contribucion`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
+-- AUTO_INCREMENT de la tabla `mensaje_usuario`
+--
+ALTER TABLE `mensaje_usuario`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
 -- AUTO_INCREMENT de la tabla `practica`
 --
 ALTER TABLE `practica`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT de la tabla `rol`
 --
 ALTER TABLE `rol`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
+-- AUTO_INCREMENT de la tabla `tarea`
+--
+ALTER TABLE `tarea`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT de la tabla `usuario`
@@ -452,10 +552,23 @@ ALTER TABLE `mensaje_contribucion`
   ADD CONSTRAINT `mensaje_contribucion_ibfk_2` FOREIGN KEY (`id_contribucion`) REFERENCES `contribucion` (`id`);
 
 --
+-- Filtros para la tabla `mensaje_usuario`
+--
+ALTER TABLE `mensaje_usuario`
+  ADD CONSTRAINT `mensaje_usuario_ibfk_1` FOREIGN KEY (`id_emisor`) REFERENCES `usuario` (`id`),
+  ADD CONSTRAINT `mensaje_usuario_ibfk_2` FOREIGN KEY (`id_receptor`) REFERENCES `usuario` (`id`);
+
+--
 -- Filtros para la tabla `practica`
 --
 ALTER TABLE `practica`
   ADD CONSTRAINT `practica_ibfk_1` FOREIGN KEY (`id_capitulo`) REFERENCES `capitulo` (`id`);
+
+--
+-- Filtros para la tabla `tarea`
+--
+ALTER TABLE `tarea`
+  ADD CONSTRAINT `tarea_ibfk_1` FOREIGN KEY (`id_capitulo`) REFERENCES `capitulo` (`id`);
 
 --
 -- Filtros para la tabla `usuario`

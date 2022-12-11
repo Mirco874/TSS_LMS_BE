@@ -7,9 +7,13 @@ const contributionMessageRoutes= Router();
 contributionMessageRoutes.get("/contribution/:id/message",async(req,res)=>{
     try {
         const {id}=req.params;
-        const updateMessageQuery=`SELECT * 
-                                  FROM mensaje_contribucion  
-                                  WHERE id_contribucion=? `;
+        const updateMessageQuery=`SELECT  mc.id as id,
+                                          mc.id_autor as id_autor,
+                                          u.nombre_completo as nombre_completo,
+                                          mc.id_contribucion as id_contribucion,
+                                          mc.contenido as contenido 
+                                FROM mensaje_contribucion mc, usuario u
+                                WHERE mc.id_autor=u.id and  id_contribucion=? `;
 
         const [rows] =await dbConnection.query(updateMessageQuery,[id])
         res.status(200).send(rows);

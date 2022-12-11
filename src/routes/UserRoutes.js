@@ -4,13 +4,15 @@ import { getUserData } from '../helpers/getClassesByUserId.js';
 
 const userRoutes= Router();
 
-userRoutes.get('/users/', async(req,res)=>{
+userRoutes.get('/users', async(req,res)=>{
     const query=`SELECT usuario.id as id,
                         nombre_completo,
                         email,
                         rol.nombre_rol as rol 
                 FROM usuario,rol 
-                WHERE usuario.id_rol=rol.id`;
+                WHERE usuario.id_rol=rol.id
+                AND usuario.id_rol!=1
+                `;
     const[rows, fields]= await dbConnection.query(query);
     res.send(rows);
 })
