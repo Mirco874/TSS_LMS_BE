@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 11-12-2022 a las 20:38:42
+-- Tiempo de generación: 11-12-2022 a las 20:45:50
 -- Versión del servidor: 10.4.21-MariaDB
 -- Versión de PHP: 8.0.10
 
@@ -245,15 +245,16 @@ CREATE TABLE `respuesta_tarea` (
   `id_tarea` int(11) NOT NULL,
   `mensaje` varchar(255) NOT NULL,
   `codigo` text DEFAULT NULL,
-  `enlace` varchar(255) DEFAULT NULL
+  `enlace` varchar(255) DEFAULT NULL,
+  `nota` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Volcado de datos para la tabla `respuesta_tarea`
 --
 
-INSERT INTO `respuesta_tarea` (`id_usuario`, `id_tarea`, `mensaje`, `codigo`, `enlace`) VALUES
-(2, 1, 'holkaaaa', 'dawvcxetrer', NULL);
+INSERT INTO `respuesta_tarea` (`id_usuario`, `id_tarea`, `mensaje`, `codigo`, `enlace`, `nota`) VALUES
+(2, 1, 'holkaaaa', 'dawvcxetrer', NULL, NULL);
 
 -- --------------------------------------------------------
 
