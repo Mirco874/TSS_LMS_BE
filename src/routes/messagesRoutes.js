@@ -15,7 +15,7 @@ messageRoutes.get("/myMessages",async(req,res)=>{
                             FROM mensaje_usuario,usuario
                             WHERE id_emisor=?
                             AND id_receptor=? 
-                            AND id_emisor=usuario.id`;
+                            AND id_receptor=usuario.id`;
 
     const [rows] =await dbConnection.query(getMyMessagesQuery,[id_emisor,id_receptor])
     res.send(rows)

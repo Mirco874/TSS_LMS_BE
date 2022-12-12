@@ -49,15 +49,16 @@ taskRoutes.put("/chapter/:id_capitulo/tasks/:id_tarea",async(req,res)=>{
 })
 
 //revisar las respuestas a la tarea
-
 taskRoutes.get("/task/:id_tarea/responses",async(req,res)=>{
     const {id_tarea}=req.params;
     const getResponsesQuery=`SELECT tarea.*,
                                     respuesta_tarea.*,
+                                    capitulo.*,
                                     usuario.nombre_completo
-                            FROM tarea,respuesta_tarea,usuario
+                            FROM tarea,respuesta_tarea,usuario,capitulo
                             WHERE tarea.id=respuesta_tarea.id_tarea 
                             AND respuesta_tarea.id_usuario=usuario.id
+                            AND capitulo.id=tarea.id_capitulo
                             AND tarea.id= ?`;
 
    const [rows]=await dbConnection.query(getResponsesQuery,[id_tarea]);
@@ -67,7 +68,6 @@ taskRoutes.get("/task/:id_tarea/responses",async(req,res)=>{
 
 
 //responder la tarea de un capitulo
-
 taskRoutes.post("/tasks/responses",async(req,res)=>{
     const {id_usuario,id_tarea,mensaje,codigo}=req.body;
 
@@ -91,6 +91,38 @@ taskRoutes.delete("/tasks/responses",async(req,res)=>{
     res.status(200).send("removed")
 })
 
+
+// calificar respuesta
+taskRoutes.put("/tasks/responses",async(req,res)=>{
+    const {id_usuario,id_tarea,nota}=req.body;
+
+    const updateNoteQuery=`UPDATE respuesta_tarea SET nota = ? 
+                               WHERE id_usuario = 2 AND id_tarea = ?`;
+
+    await dbConnection.query(updateNoteQuery,[nota,id_usuario,id_tarea]);
+
+    res.status(201).send("created")
+})
+
+
+//obtener las respuestas de un usuario
+taskRoutes.get("/tasks/responses/user/:id_usuario",async(req,res)=>{
+    const {id_usuario}=req.params;
+
+    const getResponsesQuery=`SELECT  tarea.*,
+                                    respuesta_tarea.*,
+                                    capitulo.*,
+                                    usuario.nombre_completo
+                            FROM tarea,respuesta_tarea,usuario,capitulo
+                            WHERE tarea.id=respuesta_tarea.id_tarea 
+                            AND respuesta_tarea.id_usuario=usuario.id
+                            AND capitulo.id=tarea.id_capitulo
+                            AND usuario.id=?`;
+
+   const [rows]=await dbConnection.query(getResponsesQuery,[id_usuario]);
+
+    res.send(rows);
+})
 
 
 
